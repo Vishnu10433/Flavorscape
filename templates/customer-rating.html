@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rate & Review Orders</title>
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: #f8f9fa;
+        }
+
+        .feedback-container {
+            flex: 1;
+            padding: 25px;
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 95%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        h1 {
+            color: #fc8019;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .order-section {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 20px;
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .order-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .order-header h2 {
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .order-header span {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .order-date {
+            font-size: 0.85rem;
+            color: #888;
+            text-align: right;
+            margin-bottom: 10px;
+        }
+
+        .total-amount {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #333;
+            margin-top: 10px;
+        }
+
+        .items-heading {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #333;
+            margin: 12px 0 8px;
+        }
+
+        .items-list {
+            margin-top: 5px;
+            font-size: 0.95rem;
+            color: #333;
+        }
+
+        .items-list ul {
+            padding-left: 20px;
+        }
+
+        .items-list li {
+            margin-bottom: 5px;
+        }
+
+        .rating {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .rating label {
+            cursor: pointer;
+            font-size: 26px;
+            color: white;
+            background-color: #ccc;
+            padding: 8px;
+            border-radius: 50%;
+            transition: background-color 0.3s, transform 0.2s;
+            user-select: none;
+        }
+
+        .rating label:hover {
+            background-color: #fc8019;
+            transform: scale(1.2);
+        }
+
+        .rating label.active {
+            background-color: #fc8019;
+        }
+
+        .review textarea {
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 1rem;
+            color: #555;
+            resize: none;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        .review textarea:focus {
+            border-color: #fc8019;
+        }
+
+        .submit-button {
+            text-align: right;
+            margin-top: 12px;
+        }
+
+        .submit-button button {
+            background-color: #fc8019;
+            color: white;
+            border: none;
+            padding: 9px 18px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .submit-button button:hover {
+            background-color: #e37013;
+            transform: scale(1.05);
+        }
+
+        .submit-button button:active {
+            transform: scale(1);
+        }
+
+        .thank-you-message {
+            text-align: center;
+            font-size: 1rem;
+            color: #28a745;
+            font-weight: bold;
+            margin-top: 12px;
+        }
+
+        header {
+            background: #ff5722;
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            box-sizing: border-box;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        header nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+            gap: 15px;
+        }
+
+        header nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        header nav ul li a i {
+            margin-right: 6px;
+        }
+
+        footer {
+            background: #ff5722;
+            color: white;
+            text-align: center;
+            padding: 15px 20px;
+            margin-top: auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        .readonly-feedback {
+            font-size: 1rem;
+            color: #555;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            padding: 12px;
+            border-radius: 8px;
+            width: 100%;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">FLAVORSCAPE</div>
+        <nav>
+            <ul> 
+                <li><a href="{{ url_for('start') }}"><i class="fa-solid fa-house"></i> Home</a></li>
+                <li><a href="{{ url_for('viewprofile') }}"><i class="fa-solid fa-user"></i> Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="feedback-container">
+        <h1>Rate & Review Your Orders</h1>
+
+        {% for order in orders %}
+        <div class="order-section" data-order-id="{{ order['order_id'] }}">
+            <div class="order-header">
+                <h2>Order #{{ order['order_id'] }}</h2>
+                <span>{{ order['product_name'] }}</span>
+            </div>
+            <div class="order-date">{{ order['order_date'] }}</div>
+            <div class="total-amount">Total Amount: ₹{{ order['price'] }}</div>
+
+            <div class="items-heading">Items:</div>
+            <div class="items-list">
+                <ul>
+                    <li>{{ order['product_name'] }} - ₹{{ order['price'] }}</li>
+                </ul>
+            </div>
+
+            {% if order['feedback'] %}
+                <div class="readonly-feedback">
+                    <p><strong>Rating:</strong> {{ order['feedback']['rating'] }} stars</p>
+                    <p><strong>Review:</strong> {{ order['feedback']['review'] }}</p>
+                </div>
+            {% else %}
+                <div class="rating">
+                    <label data-value="1">⭐</label>
+                    <label data-value="2">⭐</label>
+                    <label data-value="3">⭐</label>
+                    <label data-value="4">⭐</label>
+                    <label data-value="5">⭐</label>
+                </div>
+                <div class="review">
+                    <textarea placeholder="Write your review here..." rows="3"></textarea>
+                </div>
+                <div class="submit-button">
+                    <button type="button" class="submit-review">Submit Review</button>
+                </div>
+            {% endif %}
+        </div>
+        {% else %}
+        <p style="text-align:center; color:#777; font-size:1.1rem;">No orders found.</p>
+        {% endfor %}
+    </div>
+
+    <script>
+        const orderSections = document.querySelectorAll('.order-section');
+        orderSections.forEach(order => {
+            const orderDateDiv = order.querySelector('.order-date');
+            if(orderDateDiv.textContent.trim() === ""){
+                const now = new Date();
+                const formattedDate = now.toLocaleString();
+                orderDateDiv.textContent = `Date & Time: ${formattedDate}`;
+            }
+        });
+
+        orderSections.forEach(order => {
+            const stars = order.querySelectorAll('.rating label');
+            const reviewTextarea = order.querySelector('.review textarea');
+            const submitButton = order.querySelector('.submit-review');
+            let selectedRating = 0;
+
+            if(stars.length){
+                stars.forEach(star => {
+                    star.addEventListener('click', () => {
+                        selectedRating = star.dataset.value;
+                        stars.forEach(s => s.classList.remove('active'));
+                        stars.forEach(s => {
+                            if (s.dataset.value <= selectedRating) {
+                                s.classList.add('active');
+                            }
+                        });
+                    });
+                });
+            }
+
+            if(submitButton){
+                submitButton.addEventListener('click', () => {
+                    const orderId = order.dataset.orderId;
+                    const reviewText = reviewTextarea.value.trim();
+
+                    if (selectedRating === 0) {
+                        alert(`Please select a rating for Order #${orderId}`);
+                        return;
+                    }
+
+                    if (reviewText === '') {
+                        alert(`Please write a review for Order #${orderId}`);
+                        return;
+                    }
+
+                    const feedbackData = {
+                        order_id: orderId,
+                        rating: selectedRating,
+                        review: reviewText
+                    };
+
+                    fetch('/submit-feedback', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(feedbackData)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            alert(`Error: ${data.error}`);
+                        } else {
+                            alert(data.message);
+                            const thankYouMessage = document.createElement('div');
+                            thankYouMessage.classList.add('thank-you-message');
+                            thankYouMessage.textContent = 'Thank you for your feedback!';
+                            order.appendChild(thankYouMessage);
+                            stars.forEach(star => star.style.pointerEvents = 'none');
+                            reviewTextarea.disabled = true;
+                            submitButton.disabled = true;
+                            submitButton.style.cursor = 'not-allowed';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred while submitting feedback.');
+                    });
+                });
+            }
+        });
+    </script>
+
+    <footer>
+        <p>&copy; 2025 FLAVORSCAPE. All rights reserved.</p>
+    </footer>
+</body>
+</html>

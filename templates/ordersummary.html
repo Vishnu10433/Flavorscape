@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Summary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #ff8000;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #ff9933;
+            color: white;
+        }
+        .status-completed {
+            color: green;
+            font-weight: bold;
+        }
+        .status-pending {
+            color: orange;
+            font-weight: bold;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #ff8000;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Order Summary</h1>
+        {% if order %}
+        <table>
+            <tr>
+                <th>Order ID</th>
+                <td>{{ order.id }}</td>
+            </tr>
+            <tr>
+                <th>Customer Name</th>
+                <td>{{ order.customerName }}</td>
+            </tr>
+            <tr>
+                <th>Order Details</th>
+                <td>{{ order.details if order.details else 'N/A' }}</td>
+            </tr>
+            <tr>
+                <th>Total Amount</th>
+                <td>{{ order.amount if order.amount else 'N/A' }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td class="status-{{ order.status|lower }}">{{ order.status }}</td>
+            </tr>
+        </table>
+        {% else %}
+            <p>No completed orders found.</p>
+        {% endif %}
+        <a class="back-btn" href="/menu">Back to Menu</a>
+    </div>
+</body>
+</html>

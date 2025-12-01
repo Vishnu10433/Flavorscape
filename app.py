@@ -30,7 +30,7 @@ UPLOAD_FOLDER = 'static/uploads'
 os.makedirs(os.path.dirname(DATABASE), exist_ok=True)
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.secret_key = 'mysecrethifi'
+app.secret_key = 'mysecretfls'
 
 # ---------------------- DATABASE SETUP ----------------------
 def init_db():
